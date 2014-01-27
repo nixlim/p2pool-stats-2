@@ -10,3 +10,12 @@ index.html indentation
 21-02-2012
 added total shares, last share time, orphans, DOA, share ETA and efficiency to index.html
 
+27-01-2014
+First Commit since taking over
+Working on index.html
+Reworked:
+index.html
+created: style.css, main.js
+
+small change to shares.html to correct link to d3 js module
+
