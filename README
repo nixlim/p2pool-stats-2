@@ -1,3 +1,14 @@
+P2pool Stats Page Skin/Makeover
+
+Trying to get Web interface on the P2Pool looking nice.
+
+Not sure what the previous intention was, but here I will be messing around with HTML, CSS, Javascript from the standard distro to make a different looking skin for the web interface for P2Pool stats page.
+
+27.01.2014 - Ver 0.1
+
+First edit 
+___________________________________________
+FROM ORIGINAL CODE
 Evolution attempt from goblin/p2pool-stats.
 
 node.js is a fine solution for the aim of the stats, BUT tailing P2Pool's log has a high I/O price.
