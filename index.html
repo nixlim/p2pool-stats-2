@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+       <!--  <meta http-equiv="refresh" content="5; URL="127.0.0.1:9332"> -->
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>P2Pool</title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="stylesheet" href="style.css" class="css" />
+        <script type="text/javascript" src="js/d3.v2.min.js"></script>
+        
+ 
+    </head>
+    <body>
+    <!-- MAIN CONTAINER START -->
+    
+    <div class="container">
+        
+        <div id="titleBox">
+            <h2 id="titleTag">P2Pool <span class="symbol"></span> | Control Panel</h2>
+            <p><span class="insetTextGrey">P2Pool Ver.:</span> <span class="insetTextGreen" id="version"></span></p>
+            <p><span class="insetTextGrey">Web I/O Ver.:</span> <span class="insetTextGreen">0.1</span></p>
+       </div>
+
+       <div id="payAddr">
+           <p>Payments to <div><a class="insetTextGreen" id="payout_addr"></a></div></p>
+       </div>
+
+       <div id="payNow">
+           <p >Payout if a block were found NOW: <div class="insetTextGreen"><span id="payout_amount"></span> <span class="symbol"></span></div></p>
+       </div>
+
+       <div id="payFuture">
+           <p >Expected after mining for 24 hours:  <div class="insetTextGreen"><span id="expected_payout_amount"></span> <span class="symbol"></span> per block</div></p>
+       </div>
+
+
+
+    <div style="display:block;" id="textVersion">
+        
+        <button>Pool rate: <span id="pool_rate"></span></button>
+        <button>Local rate: <span id="local_rate"></span></button>
+        <button>Node uptime: <span id="uptime"></span></button>
+        <button>Peers: <span id="peers_out"></span> out, <span id="peers_in"></span> in</button>
+        <button> Expected time to share: <span id="time_to_share"></span></button>
+        <button>Efficiency: <span id="efficiency"></span></button>
+         <button onclick="stopTextColor();">Stop Update</button>
+    </div>
+    
+    <!-- TOP_BOX -->
+      <div class="container2">
+        
+        <!-- <p ><a href="graphs.html">Graphs</a></p> -->
+        
+        
+         <p>(<span id="local_doa"></span> DOA) </p>
+        <p>(<span id="pool_stale"></span> DOA+orphan)</p>
+        <p >Shares: <span id="shares_total"></span> total (<span id="shares_orphan"></span> orphaned, <span id="shares_dead"></span> dead)</p>
+        <p >Payout if a block were found NOW: <span id="payout_amount"></span> <span class="symbol"></span>.</p>
+        <p>Share difficulty: <span id="difficulty"></span></p>
+        <p >Current block value: <span id="block_value"></span> <span class="symbol"></span> Expected time to block: <span id="time_to_block"></span></p>
+        </div>
+        <!-- TOP_BOX END -->
+        <div class="container2" id="warnings"></div>
+        
+        <!-- MID_BOX START -->
+        <div class="container2">
+        <h2>Share explorer</h2>
+        <p >Best share: <span id="best_share"></span></p>
+        <p >Verified heads: <span id="verified_heads"></span></p>
+        <p >Heads: <span id="heads"></span></p>
+        <p >Verified tails: <span id="verified_tails"></span></p>
+        <p >Tails: <span id="tails"></span></p>
+        <p >My shares: <span id="my_share_hashes"></span>
+        </p>
+        </div>
+        <!-- MID_BOX END -->
+
+        <div class="container3">
+
+        <h2>Blocks found in last day:</h2>
+        <p>Note that blocks may have been orphaned from the P2Pool chain and so not be here.</p>
+        <table  border="0" id="blocks">
+            <tr><th>time</th><th>number</th><th>hash/explorer link</th><th>share</th></tr>
+        </table>
+
+        </div>
+
+        <div class="container3">        
+        <h2>Payouts if a block were found NOW:</h2>
+        <table   border="0" id="payouts">
+            <tr ><th>address</th><th>amount in <span class="symbol"></span></th></tr>
+        </table>
+        </div>
+        <!-- END OF CONTAINER -->
+        </div>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+    </body>
+</html>
