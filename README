@@ -6,7 +6,15 @@ Not sure what the previous intention was, but here I will be messing around with
 
 27.01.2014 - Ver 0.1
 
-First edit 
+First edit
+
+To use/install:
+
+1. Download the files from GitHub
+2. Save "web-static" directory as "web-static-backup"
+3. Create director "web-static"
+4. Copy the downloaded files into the new directory "web-static" 
+
 ___________________________________________
 FROM ORIGINAL CODE
 Evolution attempt from goblin/p2pool-stats.
