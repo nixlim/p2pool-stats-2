@@ -11,11 +11,24 @@ index.html indentation
 added total shares, last share time, orphans, DOA, share ETA and efficiency to index.html
 
 27-01-2014
+<<<<<<< Updated upstream
 First Commit since taking over (i.e. forking it)
+=======
+First Commit since forking
+>>>>>>> Stashed changes
 Working on index.html
 Reworked:
 index.html
 created: style.css, main.js
 
 small change to shares.html to correct link to d3 js module
+
+07-02-2014
+Header
+NavBar - Live Update (5s)
+Charts - Live Update (5s) - loads of kinks to work out still
+Gauge - Live Update (5s)
+
+Same page for all
+
 

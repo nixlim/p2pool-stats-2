@@ -6,8 +6,17 @@
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <title>P2Pool</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-        <link rel="stylesheet" href="style.css" class="css" />
-        <script type="text/javascript" src="js/d3.v2.min.js"></script>
+        
+        
+
+        <link rel="stylesheet" href="css/jqx.base.css" type="text/css" />
+        <link rel="stylesheet" href="css/theme01.css" type="text/css" />
+        <link rel="stylesheet" href="css/theme02.css" type="text/css" />
+        <link rel='stylesheet' href="css/font/typicons.min.css" />
+
+        <link rel="stylesheet" href="css/style.css" class="css" />
+        <link rel="stylesheet" href="css/graph.css" />
+        
         
  
     </head>
@@ -15,56 +24,156 @@
     <!-- MAIN CONTAINER START -->
     
     <div class="container">
+
+<!-- headerBox -->
+        <div id="headerBox">
+            <div id="titleBox">
+                <h2 id="titleTag">P2Pool <span class="symbol"></span> | Dashboard</h2>
+                <p><span class="insetTextGrey">P2Pool Ver.:</span> <span class="insetTextGreen" id="version"></span></p>
+                <p><span class="insetTextGrey">Web I/O Ver.:</span> <span class="insetTextGreen">0.1</span></p>
+           </div>
+
+           <div id="payAddr">
+               <p>Payments to <div><a class="insetTextGreen" id="payout_addr"></a></div></p>
+           </div>
+
+           <div id="payNow">
+               <!-- <p >Payout if a block were found NOW: <div class="insetTextGreen"><span id="payout_amount"></span> <span class="symbol"></span></div></p> -->
+           </div>
+
+           <div id="payFuture">
+               <p ></p>
+           </div>
+           <div id="stopUpdateBtn"><p>Press to stop Live Update (reload page to re-activate)<div><button onclick="stopTextColor();">Stop Update</button></div></div>
+        </div> 
+<!-- end of headerBox -->
+
+<!-- three panels -->
+        <div id="threePanels">
+
+
+
+<!-- leftPanel -->
+            <div id="leftPanel">
+
+            
+                <div id="jqxnavigationbar">
+                        <div>Pool rate: <span id="pool_rate"></span></span></div>
+                                <div>
+                                    <div><span id="pool_stale"></span> DOA+orphan</div>
+                                    <div>Current block value: <span id="block_value"></span> <span class="symbol"></span></div>
+                                    <div>Expected time to block: <span id="time_to_block"></span></div>
+                                    <div>Share difficulty: <span id="difficulty"></span></div>
+                               </div>
+                        <div>Local rate: <span id="local_rate"></span></span></div>
+                                <div>
+                                    <div><span id="local_doa"></span> DOA</div>
+                                    <div>Expected time to share: <span id="time_to_share"></span></div>
+                                    <div>Payout if a block were found NOW: <span class="insetTextGreen"><span id="payout_amount"></span> <span class="symbol"></span></span></div>
+                                    <div>Expected after mining for 24 hours:  <span class="insetTextGreen"><span id="expected_payout_amount"></span> <span class="symbol"></span> per block</span></div>
+                                </div>
+                        <div>Efficiency: <span id="efficiency"></span></span></div>
+                                <div>
+                                    <div>Shares: <span id="shares_total"></span> total (<span id="shares_orphan"></span> orphaned, <span id="shares_dead"></span> dead)</div>
+                                </div>
+                        <div>Node uptime: <span id="uptime"></span></span></div>
+                               <div>
+                                    <div>Peers: <span id="peers_out"></span> out, <span id="peers_in"></span> in</div>
+                                </div>
+                        <!-- <div></div>
+                            <div>
+                                <div></div>
+                                <div></div>
+                            </div> -->
+                        <div>Share explorer </span></div>
+                            <div>
+                                <div>Best share: <span id="best_share" role="button" class="jqx-link jqx-link-custom" ></span></div>
+                                <div>Verified heads: <span id="verified_heads"></span></div>
+                                <div>Heads: <span id="heads"></span></div>
+                                <div>Tails: <span id="tails"></span></div>
+                                <div>My shares: <span id="my_share_hashes"></span></div>
+                            </div>
+                        <div><a href="graphs.html">Graphs</a></div>
+                            <div></div>
+                        <div>Blocks found in last day </span></div>
+                            <div>
+                                <div>Note that blocks may have been orphaned from the P2Pool chain and so not be here.</div>
+                                <div>
+                                    <table  border="0" id="blocks">
+                                        <tr><th>time</th><th>number</th><th>hash/explorer link</th><th>share</th></tr>
+                                    </table>
+                                </div>
+                                </div>
+                        <div>Payouts if a block were found NOW </span></div>        
+                                <div>
+                                <table   border="0" id="payouts">
+                                    <tr ><th>address</th><th>amount in <span class="symbol"></span></th></tr>
+                                </table>
+                                </div>
+                        
+                        
+
+                        </div>
+
+                            
+                    
+                    
+                
+<!-- end leftPanel -->
+            </div>
+
+<!-- midPanel -->
+            <div id="midPanel">
+            <p>Periods: <span id="period_chooser"></span> Current: <span class="insetTextGreen" id="period_current"></span></p>
+            <div class="box">
+                <p>Local rate</p>
+                <svg id="local"></svg>
+            </div>
         
-        <div id="titleBox">
-            <h2 id="titleTag">P2Pool <span class="symbol"></span> | Control Panel</h2>
-            <p><span class="insetTextGrey">P2Pool Ver.:</span> <span class="insetTextGreen" id="version"></span></p>
-            <p><span class="insetTextGrey">Web I/O Ver.:</span> <span class="insetTextGreen">0.1</span></p>
-       </div>
-
-       <div id="payAddr">
-           <p>Payments to <div><a class="insetTextGreen" id="payout_addr"></a></div></p>
-       </div>
-
-       <div id="payNow">
-           <p >Payout if a block were found NOW: <div class="insetTextGreen"><span id="payout_amount"></span> <span class="symbol"></span></div></p>
-       </div>
-
-       <div id="payFuture">
-           <p >Expected after mining for 24 hours:  <div class="insetTextGreen"><span id="expected_payout_amount"></span> <span class="symbol"></span> per block</div></p>
-       </div>
-
-
-
-    <div style="display:block;" id="textVersion">
+        <div class="box"><p>Local rate reflected in shares</p>
+                <svg id="local_shares"></svg></div>
         
-        <button>Pool rate: <span id="pool_rate"></span></button>
-        <button>Local rate: <span id="local_rate"></span></button>
-        <button>Node uptime: <span id="uptime"></span></button>
-        <button>Peers: <span id="peers_out"></span> out, <span id="peers_in"></span> in</button>
-        <button> Expected time to share: <span id="time_to_share"></span></button>
-        <button>Efficiency: <span id="efficiency"></span></button>
-         <button onclick="stopTextColor();">Stop Update</button>
-    </div>
-    
-    <!-- TOP_BOX -->
-      <div class="container2">
+        <h2>Current payout to default address</h2>
+        <svg id="payout"></svg>
         
-        <!-- <p ><a href="graphs.html">Graphs</a></p> -->
+        <h2>Pool rate</h2>
+        <svg id="pool"></svg>
         
+        <h2>Peers</h2>
+        <svg id="peers"></svg>
         
-         <p>(<span id="local_doa"></span> DOA) </p>
-        <p>(<span id="pool_stale"></span> DOA+orphan)</p>
-        <p >Shares: <span id="shares_total"></span> total (<span id="shares_orphan"></span> orphaned, <span id="shares_dead"></span> dead)</p>
-        <p >Payout if a block were found NOW: <span id="payout_amount"></span> <span class="symbol"></span>.</p>
-        <p>Share difficulty: <span id="difficulty"></span></p>
-        <p >Current block value: <span id="block_value"></span> <span class="symbol"></span> Expected time to block: <span id="time_to_block"></span></p>
-        </div>
-        <!-- TOP_BOX END -->
+        <h2>Miners</h2>
+        <div id="miners"></div>
+        
+        <h2>Desired version rates</h2>
+        <svg id="desired_version_rates"></svg>
+        
+        <h2>Traffic rate</h2>
+        <svg id="traffic_rate"></svg>
+        
+        <h2>Bitcoind GetBlockTemplate Latency</h2>
+        <svg id="getwork_latency"></svg>
+        
+        <h2>Memory Usage</h2>
+        <svg id="memory_usage"></svg>
+            </div>
+<!-- end midPanel -->
+
+<!-- rightPanel -->
+            
+                <div id="gaugeContainer">Gauge</div>
+            
+
+<!-- end rightPanel -->
+</div>
+<!-- end of threePanels -->
         <div class="container2" id="warnings"></div>
         
+       
+
+
         <!-- MID_BOX START -->
-        <div class="container2">
+        <!-- <div>
         <h2>Share explorer</h2>
         <p >Best share: <span id="best_share"></span></p>
         <p >Verified heads: <span id="verified_heads"></span></p>
@@ -73,10 +182,10 @@
         <p >Tails: <span id="tails"></span></p>
         <p >My shares: <span id="my_share_hashes"></span>
         </p>
-        </div>
+        </div> -->
         <!-- MID_BOX END -->
 
-        <div class="container3">
+        <!-- <div>
 
         <h2>Blocks found in last day:</h2>
         <p>Note that blocks may have been orphaned from the P2Pool chain and so not be here.</p>
@@ -84,17 +193,23 @@
             <tr><th>time</th><th>number</th><th>hash/explorer link</th><th>share</th></tr>
         </table>
 
-        </div>
+        </div> -->
 
-        <div class="container3">        
+        <!-- <div>        
         <h2>Payouts if a block were found NOW:</h2>
         <table   border="0" id="payouts">
             <tr ><th>address</th><th>amount in <span class="symbol"></span></th></tr>
         </table>
-        </div>
-        <!-- END OF CONTAINER -->
-        </div>
+        </div> -->
+<!-- END OF CONTAINER -->
+</div>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/vendor/d3.v2.min.js"></script>
+        <script type="text/javascript" src="js/vendor/jqxcore.js"></script>
+        <script type="text/javascript" src="js/vendor/jqxchart.js"></script>
+        <script type="text/javascript" src="js/vendor/jqxgauge.js"></script>
+        <script type="text/javascript" src="js/vendor/jqxnavigationbar.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/graphs.js"></script>
     </body>
 </html>

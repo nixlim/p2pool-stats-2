@@ -1,6 +1,8 @@
 // based on goblin's p2pool-stats project
 var nIntervId = null;
 
+var gaugeEfficiency;
+
 //ATTEMPTING UNIVERSAL UPDATER
 //  function getData(locName, callData) {
 //                     var locName = locName;
@@ -123,59 +125,17 @@ var nIntervId = null;
                 d3.select('#peers_out').text(local_stats.peers.outgoing);
                 var local = d3.sum(values(local_stats.miner_hash_rates));
                 var local_dead = d3.sum(values(local_stats.miner_dead_hash_rates));
-                
-                // //RUN DYNAMIC UPDATE ON LOCAL RATE
-                // function getLocal() {
-                //     nIntervId = setInterval(function(){
-                //         d3.json('../local_stats', function(local_stats) {
-                //         //console.log('tick'); //DEBUGGER
-                //         var local = d3.sum(values(local_stats.miner_hash_rates));
-                //         d3.select('#local_rate').text(d3.format('.3s')(local) + 'H/s');
-                //                         });
-                //     },
-                //         2500); //SET UPDATE TIME HERE - 1s=500
-                //     }
-                                       
-                // getLocal();
                 d3.select('#local_rate').text(d3.format('.3s')(local) + 'H/s');
-                //END OF LOCAL RATE UPDATE
-
-
-
-
-
-
-
-
-
                 d3.select('#local_doa').text(d3.format('.2p')(local_dead/local));
-                
                 d3.select('#shares_total').text(local_stats.shares.total);
                 d3.select('#shares_orphan').text(local_stats.shares.orphan);
                 d3.select('#shares_dead').text(local_stats.shares.dead);
-                
-
                 d3.select('#efficiency').text(local_stats.efficiency != null ? d3.format('.4p')(local_stats.efficiency) : '???')
-                
-                // // DYNAMIC UPDATING (DU) - UPTIME
-                // function getUptime() {
-                //     nIntervId = setInterval(function(){
-                //         d3.json('../local_stats', function(local_stats) {
-                //         //console.log('tick'); //DEBUGGER
-                //         d3.select('#uptime').text(format_dt(local_stats.uptime));
-                //                         });
-                //     },
-                //         1800000); //SET UPDATE TIME HERE - 1s=500 - SET 1H
-                //     }
-                                       
-                // getUptime();
+
+
+
                 d3.select('#uptime').text(format_dt(local_stats.uptime)); //important - avoid initial delay on load
-                // END - DU - UPTIME
-                
-
-
                 d3.select('#block_value').text(local_stats.block_value);
-                
                 d3.select('#warnings').selectAll().data(local_stats.warnings).enter().append('p')
                     .text(function(w){ return 'Warning: ' + w })
                     .attr('style', 'color:red;border:1px solid red;padding:5px');
@@ -183,6 +143,7 @@ var nIntervId = null;
                 var time_to_share = local_stats.attempts_to_share/local;
                 d3.select('#time_to_share').text(format_dt(time_to_share));
                 
+
                 d3.json('../global_stats', function(global_stats) {
 
                     //RUN DYNAMIC UPDATE ON POOL RATE
@@ -270,4 +231,55 @@ var nIntervId = null;
                            function stopTextColor() {
   clearInterval(nIntervId);
 }
+
+var valueGauge = $('#gaugeContainer').jqxGauge('value');
+$('#gaugeContainer').jqxGauge({ width: '150px', height: '150px', radius: '50%' });
+// $('#gaugeContainer').jqxGauge({ border: {visible: false }});
+$('#gaugeContainer').jqxGauge({
+    ranges: [{ startValue: 0, endValue: 50, style: { fill: '#FC6A6A', stroke: '#FC6A6A' }, endWidth: 5, startWidth: 1 },
+                { startValue: 50, endValue: 95, style: { fill: '#FCA76A', stroke: '#FCA76A' }, endWidth: 9, startWidth: 5 },
+                { startValue: 95, endValue: 150, style: { fill: 'green', stroke: 'green' }, endWidth: 15, startWidth: 9}],
+    ticksMinor: { interval: 5, size: '5%' },
+    ticksMajor: { interval: 10, size: '9%' },
+    border: {
+        visible: true,
+        style: { fill: '#cccccc', stroke: '#cccccc' },
+        showGradient: true
+         },
+    value: 0,
+    max: 150,
+    caption: { value: 'Efficiency (%)', position: 'bottom', offset: [0, 0], visible: true },
+    colorScheme: 'scheme03',
+    animationDuration: 1200
+});
+
+function efficiencyUpdate() {
+                    nIntervId = setInterval(function(){
+d3.json('../local_stats', function(local_stats) {
+        gaugeEfficiency = d3.format('.4g')(100 * local_stats.efficiency);
+
+        $('#gaugeContainer').jqxGauge({
+            value: gaugeEfficiency
+                });
+});
+ },
+                        2500); //SET UPDATE TIME HERE - 1s=500
+                    }
+d3.json('../local_stats', function(local_stats) {
+        gaugeEfficiency = d3.format('.4g')(100 * local_stats.efficiency);
+
+        $('#gaugeContainer').jqxGauge({
+            value: gaugeEfficiency
+                });
+});
+
+efficiencyUpdate();
+
+$(document).ready(function () {
+        // Create jqxNavigationBar
+        $("#jqxnavigationbar").jqxNavigationBar({ width: 400, height: 400, theme: 'theme02', expandMode: 'multiple', expandedIndexes: []});
+        //replace arrow down with custom i
+        $(".jqx-expander-arrow").addClass("typcn typcn-info-large-outline");
+        
+    });
 
